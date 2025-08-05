@@ -1,87 +1,129 @@
 document.addEventListener('DOMContentLoaded', () => {
-    // === Countdown Timer ===
-    const weddingDate = new Date('September 5, 2025 08:00:00').getTime(); // Sesuaikan dengan tanggal dan waktu akad Anda
+    const coverPage = document.getElementById('cover-page');
+    const openBtn = document.getElementById('open-invitation-btn');
+    const mainContent = document.getElementById('main-content');
+    const backgroundMusic = document.getElementById('background-music');
+    const musicControlBtn = document.getElementById('music-control');
+    const sections = document.querySelectorAll('.section');
 
-    const countdownFunction = setInterval(() => {
+    // Tanggal pernikahan
+    const weddingDate = new Date("Sep 5, 2025 07:00:00").getTime();
+
+    // 1. Logika tombol "Buka Undangan"
+    openBtn.addEventListener('click', () => {
+        coverPage.classList.add('hidden');
+        mainContent.classList.remove('hidden');
+        
+        // Coba putar musik. Browser mungkin memblokir autoplay, jadi tambahkan .catch()
+        backgroundMusic.play().catch(error => {
+            console.log("Autoplay was prevented:", error);
+            // Tombol musik akan tetap berfungsi meski autoplay gagal
+        });
+
+        // Setelah interaksi pertama, kita bisa tampilkan tombol musik
+        musicControlBtn.style.display = 'block';
+
+        // Animasikan konten utama setelah cover hilang
+        setTimeout(() => {
+            animateSections();
+        }, 1000); // Tunggu animasi cover selesai
+    });
+    
+    // 2. Logika tombol kontrol musik
+    musicControlBtn.addEventListener('click', () => {
+        if (backgroundMusic.paused) {
+            backgroundMusic.play();
+            musicControlBtn.innerHTML = '<i class="fas fa-pause"></i>';
+        } else {
+            backgroundMusic.pause();
+            musicControlBtn.innerHTML = '<i class="fas fa-play"></i>';
+        }
+    });
+
+    // 3. Logika Countdown Timer
+    const countdown = setInterval(() => {
         const now = new Date().getTime();
         const distance = weddingDate - now;
-
-        if (distance < 0) {
-            clearInterval(countdownFunction);
-            document.getElementById('timer').innerHTML = '<p>Pernikahan telah dimulai!</p>';
-            return;
-        }
 
         const days = Math.floor(distance / (1000 * 60 * 60 * 24));
         const hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
         const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
         const seconds = Math.floor((distance % (1000 * 60)) / 1000);
 
-        document.getElementById('days').innerText = days < 10 ? '0' + days : days;
-        document.getElementById('hours').innerText = hours < 10 ? '0' + hours : hours;
-        document.getElementById('minutes').innerText = minutes < 10 ? '0' + minutes : minutes;
-        document.getElementById('seconds').innerText = seconds < 10 ? '0' + seconds : seconds;
+        document.getElementById('days').textContent = String(days).padStart(2, '0');
+        document.getElementById('hours').textContent = String(hours).padStart(2, '0');
+        document.getElementById('minutes').textContent = String(minutes).padStart(2, '0');
+        document.getElementById('seconds').textContent = String(seconds).padStart(2, '0');
+
+        if (distance < 0) {
+            clearInterval(countdown);
+            document.getElementById('countdown').innerHTML = `<h2>Kami telah menikah!</h2>`;
+        }
     }, 1000);
 
-    // === Music Player Toggle ===
-    const backgroundMusic = document.getElementById('background-music');
-    const musicToggleButton = document.getElementById('music-toggle');
-    const musicIcon = musicToggleButton.querySelector('.music-icon');
+    // 4. Logika Animasi Scroll (Intersection Observer)
+    const observer = new IntersectionObserver((entries, observer) => {
+        entries.forEach(entry => {
+            if (entry.isIntersecting) {
+                entry.target.classList.add('visible');
+                observer.unobserve(entry.target); // Hentikan observasi setelah animasi pertama
+            }
+        });
+    }, { threshold: 0.3 }); // Trigger saat 30% dari elemen terlihat
 
-    let isPlaying = false; // Akan diubah oleh browser jika autoplay diblokir
+    function animateSections() {
+        document.querySelectorAll('.reveal-from-bottom, .reveal-from-left, .reveal-from-right').forEach(el => {
+            observer.observe(el);
+        });
+    }
 
-    // Memutar musik saat halaman dimuat (jika diizinkan browser)
-    backgroundMusic.play().then(() => {
-        isPlaying = true;
-        musicIcon.innerHTML = '&#10074;&#10074;'; // Pause icon
-    }).catch(error => {
-        // Autoplay diblokir, tetap tampilkan play icon
-        isPlaying = false;
-        musicIcon.innerHTML = '&#9654;'; // Play icon
-        console.log("Autoplay diblokir oleh browser. Pengguna harus mengklik tombol putar.");
+    // 5. Logika Galeri Foto (Lightbox)
+    const galleryItems = document.querySelectorAll('.gallery-item img');
+    const lightbox = document.getElementById('lightbox');
+    const lightboxImage = document.getElementById('lightbox-image');
+    const lightboxClose = document.querySelector('.lightbox-close');
+
+    galleryItems.forEach(item => {
+        item.addEventListener('click', () => {
+            lightbox.style.display = 'block';
+            lightboxImage.src = item.src;
+            document.body.style.overflow = 'hidden'; // Nonaktifkan scrolling
+        });
     });
 
+    lightboxClose.addEventListener('click', () => {
+        lightbox.style.display = 'none';
+        document.body.style.overflow = 'auto'; // Aktifkan kembali scrolling
+    });
 
-    musicToggleButton.addEventListener('click', () => {
-        if (isPlaying) {
-            backgroundMusic.pause();
-            musicIcon.innerHTML = '&#9654;'; // Play icon
-        } else {
-            backgroundMusic.play();
-            musicIcon.innerHTML = '&#10074;&#10074;'; // Pause icon
+    // Tutup lightbox jika mengklik di luar gambar
+    lightbox.addEventListener('click', (e) => {
+        if (e.target !== lightboxImage) {
+            lightbox.style.display = 'none';
+            document.body.style.overflow = 'auto';
         }
-        isPlaying = !isPlaying;
     });
 
-    // === Salin Nomor Rekening ===
-    const copyButton = document.querySelector('.btn-copy');
-    if (copyButton) {
-        copyButton.addEventListener('click', () => {
-            const norekSpan = document.getElementById('norek');
-            const textToCopy = norekSpan.innerText;
+    // 6. Logika Form Ucapan (Simulasi)
+    const wishForm = document.getElementById('wish-form');
+    const wishesList = document.getElementById('wishes-list');
 
-            navigator.clipboard.writeText(textToCopy).then(() => {
-                const originalText = copyButton.innerText;
-                copyButton.innerText = 'Disalin!';
-                setTimeout(() => {
-                    copyButton.innerText = originalText;
-                }, 1500);
-            }).catch(err => {
-                console.error('Gagal menyalin:', err);
-                alert('Gagal menyalin nomor rekening. Silakan salin manual.');
-            });
-        });
-    }
+    wishForm.addEventListener('submit', (e) => {
+        e.preventDefault();
+        const name = document.getElementById('name').value;
+        const message = document.getElementById('message').value;
 
-    // === Smooth Scroll untuk "Lihat Undangan" ===
-    const viewInviteBtn = document.querySelector('.hero-content .btn');
-    if (viewInviteBtn) {
-        viewInviteBtn.addEventListener('click', function(event) {
-            event.preventDefault(); // Mencegah perilaku default tautan
-            const targetId = this.getAttribute('href');
-            document.querySelector(targetId).scrollIntoView({
-                behavior: 'smooth'
-            });
-        });
-    }
+        // Tambahkan ucapan baru ke daftar
+        const wishItem = document.createElement('div');
+        wishItem.classList.add('wish-item');
+        wishItem.innerHTML = `<h4>${name}</h4><p>${message}</p>`;
+
+        // Sisipkan di paling atas
+        wishesList.prepend(wishItem);
+
+        // Reset form
+        wishForm.reset();
+        
+        alert('Ucapan Anda berhasil dikirim!');
+    });
 });

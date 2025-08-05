@@ -3,93 +3,136 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Undangan Pernikahan Kaka Dona & Nisasa</title>
+    <title>Undangan Pernikahan Nisa & Dona</title>
     <link rel="stylesheet" href="style.css">
-    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@300;400;600&family=Playfair+Display:wght@400;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
 </head>
 <body>
 
-    <audio id="background-music" loop autoplay>
-        <source src="https://drive.google.com/uc?export=download&id=17f-g9683d_I6H628OAYDvjXQhVU0GtlQ" type="audio/mpeg">
-        Browser Anda tidak mendukung elemen audio.
+    <audio id="background-music" loop>
+        <source src="assets/sound/tiara_andini.mp3" type="audio/mpeg">
     </audio>
 
-    <button id="music-toggle" class="music-toggle-button">
-        <span>&#9654;</span> </button>
+    <button id="music-control" class="music-control-btn"><i class="fas fa-play"></i></button>
 
-    <section id="hero" class="hero-section">
-        <div class="hero-overlay"></div>
-        <div class="hero-content">
-            <p class="greeting">Dengan hormat, kami mengundang Anda untuk...</p>
-            <h1 class="main-title">Pernikahan</h1>
-            <h2 class="names">Kaka Dona <span class="ampersand">&amp;</span> Nisasa</h2>
-            <p class="date-hero">Minggu, 5 September 2025</p>
-            <a href="#acara" class="btn">Lihat Undangan</a>
+    <div id="cover-page" class="cover-page">
+        <div class="cover-content">
+            <p>The Wedding of</p>
+            <h1>Nisa & Dona</h1>
+            <p class="date">Jumat, 5 September 2025</p>
+            <button id="open-invitation-btn">Buka Undangan</button>
         </div>
-    </section>
+    </div>
 
-    <section id="sambutan" class="sambutan-section section-padding">
-        <div class="container">
-            <p class="quote">"Dengan memohon rahmat dan ridho Allah SWT, kami bermaksud mengundang Bapak/Ibu/Saudara/i untuk menghadiri acara pernikahan kami."</p>
-        </div>
-    </section>
+    <main id="main-content" class="main-content hidden">
 
-    <section id="acara" class="acara-section section-padding">
-        <div class="container">
-            <h2 class="section-title">Detail Acara</h2>
-
-            <div class="event-card">
-                <h3>Akad Nikah</h3>
-                <p class="time">Pukul 08.00 WIB</p>
-                <p class="date">Minggu, 5 September 2025</p>
-            </div>
-
-            <div class="event-card">
-                <h3>Resepsi Pernikahan</h3>
-                <p class="time">Pukul 11.00 - 14.00 WIB</p>
-                <p class="date">Minggu, 5 September 2025</p>
-            </div>
-
-            <div class="location-info">
-                <p class="address">Lokasi: Jl. Langensari No. 12, Desa Langensari, Kec. Lembang, Kab. Bandung Barat</p>
-                <a href="https://maps.app.goo.gl/ContohLinkGoogleMapsAnda" target="_blank" class="btn btn-primary">Lihat di Google Maps</a>
+        <section id="couple" class="section reveal-from-bottom">
+            <h2 class="section-title">Pasangan Mempelai</h2>
+            <div class="couple-container">
+                <div class="couple-card">
+                    <div class="couple-photo-border reveal-from-left">
+                        <img src="assets/images/nisa.jpg" alt="Foto Nisa">
+                    </div>
+                    <h3>Nisasa</h3>
+                    <p>Putri dari Bapak Asep dan Ibu Euis</p>
                 </div>
-        </div>
-    </section>
+                <p class="separator">&</p>
+                <div class="couple-card">
+                    <div class="couple-photo-border reveal-from-right">
+                        <img src="assets/images/dona.jpg" alt="Foto Dona">
+                    </div>
+                    <h3>Dona Sodrun</h3>
+                    <p>Putra dari Bapak Asep dan Ibu Ede</p>
+                </div>
+            </div>
+        </section>
 
-    <section id="countdown" class="countdown-section section-padding">
-        <div class="container">
-            <h2 class="section-title">Hitung Mundur Pernikahan</h2>
-            <div id="timer" class="timer">
-                <div class="timer-box">
+        <section id="countdown" class="section reveal-from-bottom">
+            <h2 class="section-title">Hari Bahagia Kami</h2>
+            <div class="countdown-container">
+                <div class="countdown-item">
                     <span id="days">00</span>
                     <p>Hari</p>
                 </div>
-                <div class="timer-box">
+                <div class="countdown-item">
                     <span id="hours">00</span>
                     <p>Jam</p>
                 </div>
-                <div class="timer-box">
+                <div class="countdown-item">
                     <span id="minutes">00</span>
                     <p>Menit</p>
                 </div>
-                <div class="timer-box">
+                <div class="countdown-item">
                     <span id="seconds">00</span>
                     <p>Detik</p>
                 </div>
             </div>
-        </div>
-    </section>
+        </section>
 
-    <section id="galeri" class="galeri-section section-padding">
-        <div class="container">
-            <h2 class="section-title">Galeri Foto</h2>
-            <div class="gallery-grid">
-                <img src="http://googleusercontent.com/file_content/1" alt="Foto Prewedding 1" class="gallery-item">
-                <img src="http://googleusercontent.com/file_content/1" alt="Foto Prewedding 2" class="gallery-item">
-                <img src="http://googleusercontent.com/file_content/1" alt="Foto Prewedding 3" class="gallery-item">
+        <section id="event" class="section reveal-from-bottom">
+            <h2 class="section-title">Detail Acara</h2>
+            <div class="event-details">
+                <div class="event-card reveal-from-left">
+                    <h4>Akad Nikah</h4>
+                    <p class="event-date">Jumat, 05 September 2025</p>
+                    <p class="event-time">Pukul 07:00 WIB</p>
+                    <p class="event-location">Saung Cikidang, Lembang</p>
                 </div>
-        </div>
-    </section>
+                <div class="event-card reveal-from-right">
+                    <h4>Peta Lokasi</h4>
+                    <div class="map-container">
+                        <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3961.341103230672!2d107.59560411477062!3d-6.852927995039014!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x2e68e4a90d4a984b%3A0x8f7d983d57d7b578!2sSaung%20Cikidang%20Lembang!5e0!3m2!1sen!2sid!4v1625032549303!5m2!1sen!2sid" allowfullscreen="" loading="lazy"></iframe>
+                    </div>
+                </div>
+            </div>
+        </section>
 
-    <section id="amplop
+        <section id="gallery" class="section reveal-from-bottom">
+            <h2 class="section-title">Galeri Kebahagiaan</h2>
+            <div class="photo-gallery">
+                <div class="gallery-item reveal-from-left"><img src="assets/images/fotokita.jpg" alt="Foto Bersama"></div>
+                <div class="gallery-item reveal-from-right"><img src="assets/images/fotokita2.jpg" alt="Foto Bersama 2"></div>
+                </div>
+        </section>
+
+        <section id="wishes" class="section reveal-from-bottom">
+            <h2 class="section-title">Kiriman Doa & Ucapan</h2>
+            <form id="wish-form">
+                <input type="text" id="name" placeholder="Nama Anda" required>
+                <textarea id="message" placeholder="Tuliskan ucapan dan doa terbaik Anda..." rows="4" required></textarea>
+                <button type="submit">Kirim Ucapan</button>
+            </form>
+            <div id="wishes-list" class="wishes-list">
+                </div>
+        </section>
+
+        <section id="gifts" class="section reveal-from-bottom">
+            <h2 class="section-title">Kirim Hadiah</h2>
+            <p>Kehadiran Anda adalah kado terbaik, namun jika Anda ingin memberikan hadiah, silakan kirimkan ke:</p>
+            <div class="gift-options">
+                <div class="gift-card reveal-from-left">
+                    <h4>Transfer Bank</h4>
+                    <p><strong>BCA a.n Nisasa</strong></p>
+                    <p>123-456-7890</p>
+                </div>
+                <div class="gift-card reveal-from-right">
+                    <h4>Kirim Fisik</h4>
+                    <p><strong>Nisasa & Dona</strong></p>
+                    <p>Jalan Langensari RT 01 RW 13, Kecamatan Lembang, Kabupaten Bandung Barat</p>
+                </div>
+            </div>
+        </section>
+
+    </main>
+
+    <div id="lightbox" class="lightbox">
+        <span class="lightbox-close">&times;</span>
+        <img id="lightbox-image" class="lightbox-content">
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
